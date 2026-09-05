@@ -41,13 +41,21 @@ const findUserByName = (name) => {
 
 const findUserById = (id) => users["users_list"].find((user) => user["id"] === id);
 
+const addUser = (user) => {
+    users["users_list"].push(user);
+    return user;
+}
+
+
+////////// GET //////////
+
 app.use(express.json());
 
 app.get("/", (req, res) => { // HTTP GET request
     res.send("Hello, world!!!!");
 });
 
-app.get("/users", (req, res) => {
+app.get("/users", (req, res) => { // /users?name=Name
     const name = req.query.name;
     if (name != undefined) {
         let result = findUserByName(name);
@@ -58,7 +66,7 @@ app.get("/users", (req, res) => {
     }
 });
 
-app.get("/users/:id", (req, res) => {
+app.get("/users/:id", (req, res) => { // /users/idValue
     const id = req.params["id"]; // or req.params.id
     let result = findUserById(id);
     if (result === undefined) {
@@ -68,7 +76,21 @@ app.get("/users/:id", (req, res) => {
     }
 });
 
-app.listen(port, () => { // listen to this port
+
+////////// POST //////////
+/* Example of curl POST HTTP request:
+ * curl -X POST -H "Content-Type: application/json" -d '{"name": "John", "age": 30}' https://example.com */
+
+app.post("/users", (req, res) => {
+    const userToAdd = req.body; // access incoming data in request
+    addUser(userToAdd);
+    res.send();
+})
+
+
+////////// listen//////////
+
+app.listen(port, () => { // listen to HTTP requests on this port
     console.log(
         `Example app listening at http://localhost:${port}`
     );
