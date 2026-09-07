@@ -1,7 +1,7 @@
 import express from "express";
 
-const app = express();
-const port = 8000;
+const app = express(); // setup api
+const port = 8000; // port number
 
 const users = {
     users_list : [
@@ -46,16 +46,24 @@ const addUser = (user) => {
     return user;
 }
 
+const deleteUser = (id) => {
+    let index = users["users_list"].findIndex((user) => user["id"] === id);
+    if (index === -1) return undefined;
+    return users["users_list"].splice(index, 1)[0];
+}
+
 
 ////////// GET //////////
 
 app.use(express.json());
 
 app.get("/", (req, res) => { // HTTP GET request
+    // main page
     res.send("Hello, world!!!!");
 });
 
 app.get("/users", (req, res) => { // /users?name=Name
+    // sends list of users or, given a query name, returns a specific user
     const name = req.query.name;
     if (name != undefined) {
         let result = findUserByName(name);
@@ -67,6 +75,7 @@ app.get("/users", (req, res) => { // /users?name=Name
 });
 
 app.get("/users/:id", (req, res) => { // /users/idValue
+    // direct endpoint for resource
     const id = req.params["id"]; // or req.params.id
     let result = findUserById(id);
     if (result === undefined) {
@@ -82,13 +91,28 @@ app.get("/users/:id", (req, res) => { // /users/idValue
  * curl -X POST -H "Content-Type: application/json" -d '{"name": "John", "age": 30}' https://example.com */
 
 app.post("/users", (req, res) => {
+    // add a user to the users list with a POST HTTP request
     const userToAdd = req.body; // access incoming data in request
     addUser(userToAdd);
     res.send();
 })
 
 
-////////// listen//////////
+////////// DELETE //////////
+
+app.delete("/users/:id", (req, res) => { // curl -X DELETE http://localhost:8000/users/abc123
+    // delete a user from the users list if it exists
+    const id = req.params["id"];
+    let result = deleteUser(id);
+    if (result === undefined) {
+        res.status(404).send("Resource not found. Cannot delete.");
+    } else {
+        res.status(204).send();
+    }
+})
+
+
+////////// listen //////////
 
 app.listen(port, () => { // listen to HTTP requests on this port
     console.log(
