@@ -15,7 +15,7 @@ function MyApp() {
   function updateList(person) {
     setCharacters([...characters, person]);
   }
-  
+
   return (
     <div className="container">
       <Table 
