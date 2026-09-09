@@ -39,11 +39,6 @@ function MyApp() {
       .catch((error) => {
         console.log(error);
       });
-    postUser(person)
-      .then(() => setCharacters([...characters, person]))
-      .catch((error) => {
-        console.log(error);
-      });
   }
 
   useEffect(() => {
