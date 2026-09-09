@@ -5,6 +5,22 @@ import Form from "./Form";
 function MyApp() {
   const [characters, setCharacters] = useState([]);
   
+  function fetchUsers() {
+    const promise = fetch("http://localhost:8000/users");
+    return promise;
+  }
+
+  function postUser() {
+    const promise = fetch("http://localhost:8000/users", {
+      method : "POST",
+      headers : {
+        "Content-type" : "application/json",
+      },
+      body : JSON.stringify(person)
+    });
+    return promise;
+  }
+  
   function removeOneCharacter(index) {
     // removes a character at the given index
     const updated = characters.filter((character, i) => {
@@ -15,12 +31,12 @@ function MyApp() {
 
   function updateList(person) {
     // updates the list of characters if the form is submitted.
-    setCharacters([...characters, person]);
-  }
-
-  function fetchUsers() {
-    const promise = fetch("http://localhost:8000/users");
-    return promise;
+    // setCharacters([...characters, person]);
+    postUser(person)
+      .then(() => setCharacters([...characters, person]))
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   useEffect(() => {
