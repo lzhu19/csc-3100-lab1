@@ -21,12 +21,25 @@ function MyApp() {
     return promise;
   }
   
-  function removeOneCharacter(index) {
-    // removes a character at the given index
-    const updated = characters.filter((character, i) => {
-        return i != index;
-    })
-    setCharacters(updated);
+  function removeOneCharacter(id) {
+    // removes a character with the given id
+    const promise = fetch(`http://localhost:8000/users/${id}`, {
+      method : "DELETE",
+    });
+
+    promise
+      .then((response) => {
+        if (response.status === 204) {
+          setCharacters((currentCharacters) => 
+            currentCharacters.filter((character) => 
+              character.id !== id
+            )
+          );
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
   function updateList(person) {
@@ -34,7 +47,7 @@ function MyApp() {
     // setCharacters([...characters, person]);
     postUser(person) 
       .then((response) => {
-        if (response.status == 201) return response.json();
+        if (response.status === 201) return response.json();
         return null;
       })
       .then((addedUser) => {

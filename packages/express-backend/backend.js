@@ -113,7 +113,7 @@ app.post("/users", (req, res) => {
 ////////// DELETE //////////
 
 app.delete("/users/:id", (req, res) => { // curl -X DELETE http://localhost:8000/users/abc123
-    // delete a user from the users list if it exists
+    // delete a user by id from the users list if it exists
     const id = req.params["id"];
     let result = deleteUser(id);
     if (result === undefined) {
