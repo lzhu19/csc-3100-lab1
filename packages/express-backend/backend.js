@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 
 const app = express(); // setup api
 const port = 8000; // port number
@@ -59,9 +60,12 @@ const deleteUser = (id) => {
 }
 
 
-////////// GET //////////
+////////// SETUP //////////
 
+app.use(cors());
 app.use(express.json());
+
+////////// GET //////////
 
 app.get("/", (req, res) => { // HTTP GET request
     // main page
