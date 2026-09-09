@@ -32,12 +32,13 @@ function MyApp() {
   function updateList(person) {
     // updates the list of characters if the form is submitted.
     // setCharacters([...characters, person]);
-    postUser(person)
-      .then(() => setCharacters([...characters, person]))
+    postUser(person) 
+      .then((response) => {
+        if (response == 201) setCharacters([...characters, person]);
+      })
       .catch((error) => {
         console.log(error);
       });
-    // setCharacters([...characters, person]);
     postUser(person)
       .then(() => setCharacters([...characters, person]))
       .catch((error) => {
