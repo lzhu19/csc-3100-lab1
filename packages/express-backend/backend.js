@@ -105,8 +105,8 @@ app.get("/users/:id", (req, res) => { // /users/idValue
 app.post("/users", (req, res) => {
     // add a user to the users list with a POST HTTP request
     const userToAdd = req.body; // access incoming data in request
-    addUser(userToAdd);
-    res.status(201).send();
+    let user = addUser(userToAdd);
+    res.status(201).send(user);
 })
 
 

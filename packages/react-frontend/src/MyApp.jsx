@@ -34,7 +34,16 @@ function MyApp() {
     // setCharacters([...characters, person]);
     postUser(person) 
       .then((response) => {
-        if (response == 201) setCharacters([...characters, person]);
+        if (response.status == 201) return response.json();
+        return null;
+      })
+      .then((addedUser) => {
+        if (addedUser !== null) {
+          setCharacters((currentCharacters) => [
+            ...currentCharacters,
+            addedUser,
+          ])
+        }
       })
       .catch((error) => {
         console.log(error);
