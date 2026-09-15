@@ -1,0 +1,13 @@
+{
+  "name": "unit-tests",
+  "version": "1.0.0",
+  "description": "unit testing with Jest",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^30.5.1"
+  }
+}
