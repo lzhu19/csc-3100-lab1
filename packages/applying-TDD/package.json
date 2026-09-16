@@ -1,0 +1,13 @@
+{
+  "name": "applying-tdd",
+  "version": "1.0.0",
+  "description": "Applying TDD",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "jest": "^30.5.1"
+  }
+}
